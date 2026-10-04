@@ -1,0 +1,126 @@
+{
+  "project_name": "Hyperbolic Triangle Explorer",
+  "theme": "Dark Observatory / IDE Math Lab",
+  "color_palette": {
+    "background": {
+      "main_bg": "#0B0F17",
+      "canvas_bg": "#070A10",
+      "card_surface": "rgba(15, 23, 42, 0.75)",
+      "card_border": "rgba(56, 189, 248, 0.2)",
+      "hud_glass": "rgba(11, 15, 23, 0.85)",
+      "panel_bg": "#111827"
+    },
+    "text": {
+      "primary": "#F8FAFC",
+      "secondary": "#94A3B8",
+      "muted": "#64748B",
+      "math_highlight": "#38BDF8",
+      "defect_warning": "#FFB800"
+    },
+    "geodesic_and_vertices": {
+      "vertex_A": {
+        "hex": "#00F0FF",
+        "name": "Cyan Pulse",
+        "glow": "0 0 15px rgba(0, 240, 255, 0.8)"
+      },
+      "vertex_B": {
+        "hex": "#00FF87",
+        "name": "Electric Emerald",
+        "glow": "0 0 15px rgba(0, 255, 135, 0.8)"
+      },
+      "vertex_C": {
+        "hex": "#FF007F",
+        "name": "Laser Magenta",
+        "glow": "0 0 15px rgba(255, 0, 127, 0.8)"
+      },
+      "geodesic_line": {
+        "hex": "#38BDF8",
+        "glow": "0 0 10px rgba(56, 189, 248, 0.6)"
+      },
+      "angle_arc": {
+        "hex": "#A855F7",
+        "glow": "0 0 8px rgba(168, 85, 247, 0.5)"
+      },
+      "saddle_surface_mesh": "#1E293B",
+      "saddle_surface_wireframe": "rgba(56, 189, 248, 0.15)"
+    },
+    "status": {
+      "euclidean_mode": "#10B981",
+      "hyperbolic_mode": "#F59E0B",
+      "strong_hyperbolic": "#EC4899"
+    }
+  },
+  "typography": {
+    "heading_font": "JetBrains Mono, Outfit, monospace",
+    "math_font": "Fira Code, KaTeX_Main, monospace",
+    "body_font": "IBM Plex Sans, sans-serif",
+    "scales": {
+      "h1_title": "text-2xl sm:text-3xl font-bold tracking-tight text-slate-100",
+      "subtitle": "text-xs sm:text-sm text-sky-400 font-mono tracking-wide",
+      "angle_sum_hero": "text-3xl sm:text-5xl font-mono font-extrabold tracking-wider",
+      "degree_label": "text-xs font-mono font-bold px-2 py-0.5 rounded backdrop-blur-md shadow-lg border",
+      "control_label": "text-xs font-mono uppercase tracking-widest text-slate-400 font-semibold"
+    }
+  },
+  "layout_structure": {
+    "type": "Single-Screen Interactive Observatory Tool",
+    "header": {
+      "height": "h-16",
+      "bg": "bg-[#0B0F17]/90 backdrop-blur-xl border-b border-sky-500/20 px-6 flex items-center justify-between z-50",
+      "components": [
+        "Brand identity icon (Hyperbolic Triangle SVG)",
+        "App title 'Hyperbolic Triangle Explorer'",
+        "Subtitle tag 'Non-Euclidean Geometry Lab'",
+        "Mode indicator badge (Euclidean K=0 vs Hyperbolic K<0)",
+        "Quick Reset button",
+        "Information Modal Trigger"
+      ]
+    },
+    "main_container": {
+      "grid": "relative w-full h-[calc(100vh-4rem)] bg-[#070A10] overflow-hidden flex flex-col lg:flex-row",
+      "canvas_area": "relative flex-1 h-full w-full cursor-grab active:cursor-grabbing",
+      "floating_hud_left": "absolute top-4 left-4 z-20 flex flex-col gap-3 max-w-xs sm:max-w-sm pointer-events-auto",
+      "floating_hud_right": "absolute top-4 right-4 z-20 flex flex-col gap-3 w-72 sm:w-80 pointer-events-auto",
+      "floating_hud_bottom": "absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex items-center gap-4 bg-[#0B0F17]/90 backdrop-blur-xl border border-sky-500/30 px-6 py-3 rounded-full shadow-2xl pointer-events-auto"
+    }
+  },
+  "component_path": "/app/frontend/src/components/ui/",
+  "key_components": {
+    "Canvas3DSaddle": "Three.js / React Three Fiber interactive 3D hyperbolic paraboloid z = K*(x^2 - y^2) surface with Raycasting for vertex dragging",
+    "Canvas2DPoincare": "Alternative 2D Poincaré Disk Projection canvas showing curved arcs intersecting boundary at 90 degrees",
+    "AngleSumCard": "Hero HUD card displaying dynamic Angle Sum (alpha + beta + gamma), Angular Defect delta = 180° - Sum, and Area relation",
+    "CurvatureControl": "Precision slider with snap points (0 Euclidean, -0.5 Moderate, -1.0 Deep Hyperbolic) with visual curvature response",
+    "VertexTelemetry": "Coordinates & angle breakdowns for Vertex A (Cyan), Vertex B (Emerald), Vertex C (Magenta) with real-time degree updates",
+    "ExplanationDrawer": "Collapsible interactive guide explaining Gaussian curvature K, geodesic triangles, parallel postulate violation, and Gauss-Bonnet theorem (Area = -K * Defect)"
+  },
+  "motion_and_effects": {
+    "canvas_effects": "Subtle particle stars/grid in background, bloom/glow effect on geodesic lines using Three.js shader or CSS drop-shadow filters",
+    "vertex_pulse": "Continuous glowing ring animation around active draggable vertices",
+    "defect_alert": "Color transition on Angle Sum text from emerald (180°) to bright amber (<180°) as negative curvature increases",
+    "transitions": "Smooth camera interpolation when toggling between 2D Poincaré view and 3D Saddle view"
+  },
+  "image_urls": [],
+  "instructions_to_main_agent": [
+    "Build a state-of-the-art interactive mathematical visualization for hyperbolic geometry using Three.js (or Canvas2D/WebGL) in React.",
+    "Ensure 3D saddle geometry is generated mathematically using z = K * (x^2 - y^2) or hyperbolic metric geodesics.",
+    "Implement draggable vertices A, B, and C with full mouse/touch drag controls. Constrain drag to surface or 2D disk appropriately.",
+    "Calculate geodesic curves between A-B, B-C, C-A along the hyperbolic surface and render them as neon glowing tubes or multi-segment paths.",
+    "Compute tangent vectors at each vertex to calculate internal angles alpha, beta, gamma accurately.",
+    "Display floating overlay degree labels next to A, B, C directly over the 3D canvas using CSS transform / screen projection coordinate math.",
+    "Provide a prominent 'Live Angle Sum Display' (e.g. '132.4° < 180°') highlighting the defect delta = 180° - sum.",
+    "Provide a Curvature Slider (K from 0.0 to -2.0). When K=0, the triangle behaves strictly as a Euclidean triangle with sum = 180°. As K becomes negative, geodesics curve inward/outward and angle sum drops below 180°.",
+    "Include 2D (Poincaré Disk) vs 3D (Saddle Surface) view toggle mode.",
+    "Include a 'Reset Vertices' button to return A, B, C and Curvature to default preset states.",
+    "Include a short, elegant, interactive explanation panel breaking down: Euclidean vs Hyperbolic, Gauss-Bonnet Theorem (Area = Defect / |K|), and Why straight lines curve in negative space.",
+    "All buttons, sliders, vertex tags, toggle switches, and metrics MUST include clear data-testid attributes (e.g., data-testid='curvature-slider', data-testid='angle-sum-display', data-testid='toggle-2d-3d').",
+    "Ensure dark IDE/observatory styling using Tailwind CSS with glassmorphism backdrop blurs (`backdrop-blur-md bg-slate-900/80 border border-sky-500/20`).",
+    "Use Sonner for toasts when vertex resetting or preset actions occur."
+  ],
+  "UNIVERSAL GUIDELINES FOR MAIN AGENT": [
+    "Do NOT use generic Inter font for main headings. Use technical monospace/sans pairing (JetBrains Mono, Outfit, Fira Code).",
+    "Maintain APCA compliant contrast ratios for mathematical data text.",
+    "Ensure exact data-testid attributes on all interactive controls (buttons, inputs, sliders, toggles) for automated test suites.",
+    "Ensure mobile responsiveness with auto-collapsible HUD panels on narrow screens.",
+    "No transparent backgrounds on dropdowns, modals, or header overlays without backdrop-blur filters."
+  ]
+}
