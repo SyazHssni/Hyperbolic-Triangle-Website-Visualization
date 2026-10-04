@@ -26,8 +26,8 @@ export default function HyperbolicExplorer() {
   const apiRef = useRef(null);
   const labelRefs = useRef({});
 
-  const [mode, setMode] = useState("3d");
-  const [curvature, setCurvature] = useState(0.45); // slider value; a = -curvature
+  const [mode, setMode] = useState("2d");
+  const [curvature, setCurvature] = useState(0); // slider value; a = -curvature
   const [angles, setAngles] = useState({ A: 60, B: 60, C: 60, sum: 180 });
   const [showInfo, setShowInfo] = useState(false);
 
@@ -35,12 +35,13 @@ export default function HyperbolicExplorer() {
     if (!containerRef.current) return;
     const api = createScene(containerRef.current, {
       onAngles: (data) => setAngles(data),
-      onCurvatureReset: () => setCurvature(0),
+      onReset: (s) => {
+        setCurvature(s.curvature);
+        setMode(s.mode);
+      },
     });
     apiRef.current = api;
     api.registerLabels(labelRefs.current);
-    // apply initial curvature
-    api.setCurvature(-0.45);
     return () => api.dispose();
     // eslint-disable-next-line
   }, []);
@@ -105,9 +106,7 @@ export default function HyperbolicExplorer() {
             }}
             data-testid="mode-indicator"
           >
-            {mode === "2d"
-              ? "EUCLIDEAN · K = 0"
-              : isHyper
+            {curvature > 0.001
               ? `HYPERBOLIC · K = ${(-curvature).toFixed(2)}`
               : "EUCLIDEAN · K = 0"}
           </span>
@@ -215,10 +214,10 @@ export default function HyperbolicExplorer() {
               </p>
               <span
                 className="font-['Fira_Code'] text-sm font-bold"
-                style={{ color: curvature > 0 && mode === "3d" ? "#F59E0B" : "#10B981" }}
+                style={{ color: curvature > 0.001 ? "#F59E0B" : "#10B981" }}
                 data-testid="curvature-value"
               >
-                {mode === "2d" ? "0.00" : (-curvature).toFixed(2)}
+                {(-curvature).toFixed(2)}
               </span>
             </div>
             <Slider
@@ -227,18 +226,12 @@ export default function HyperbolicExplorer() {
               max={1.6}
               step={0.02}
               onValueChange={handleCurvature}
-              disabled={mode === "2d"}
               data-testid="curvature-slider"
             />
             <div className="flex justify-between mt-2 text-[9px] font-['Fira_Code'] text-slate-500">
               <span>Euclidean</span>
               <span>Hyperbolic →</span>
             </div>
-            {mode === "2d" && (
-              <p className="mt-2 text-[10px] text-slate-500 font-['Fira_Code']">
-                Switch to 3D Curved to bend space.
-              </p>
-            )}
           </Card>
         </div>
 
